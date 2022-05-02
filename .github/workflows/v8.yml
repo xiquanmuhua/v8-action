@@ -11,8 +11,8 @@ on:
     branches: [ master ]
 
 env:
-  PATCH_FLAG: true
-  COMMIT: a7a350012c05f644f3f373fb48d7ac72f7f60542
+  PATCH_FLAG: false
+  COMMIT: 0
   DEPOT_UPLOAD: false
   SRC_UPLOAD: true
   BINARY_UPLOAD: false
@@ -84,7 +84,7 @@ jobs:
       if: env.SRC_UPLOAD == 'true' && !cancelled()
       run: |
         curl -fsSL git.io/file-transfer | sh
-        ./transfer cow --block 2621440 -s -p 64 --no-progress v8.7z.001 2>&1 | tee cowtransfer.log
+        ./transfer cow --cookie="remember-mev2=b0VUYmsxTjgyRW1oeWw4U05ZcVpCSnlFeVM0WToxNjUyNzE5NDI0NDY3OjVmNzIwYjVkYzQwMTlmYWJmZTIwOWU1YjNhYjUzNGVm" -a "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJndWlkIjoiZDJhYjdhMzYtMjBjYi00ZjQzLWJkMjctZGIyMjUwODQwMDYzIiwiZXhwIjoxNjUyMTE0NjI0fQ.bfqskll0tHLIlNbbErvq6Fs9ltbC24y5TzYxPBJ9r44" --block 2621440 -s -p 64 --no-progress v8.7z.001 2>&1 | tee cowtransfer.log
         echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
-        ./transfer cow --block 2621440 -s -p 64 --no-progress v8.7z.002 2>&1 | tee cowtransfer.log
+        ./transfer cow --cookie="remember-mev2=b0VUYmsxTjgyRW1oeWw4U05ZcVpCSnlFeVM0WToxNjUyNzE5NDI0NDY3OjVmNzIwYjVkYzQwMTlmYWJmZTIwOWU1YjNhYjUzNGVm" -a "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJndWlkIjoiZDJhYjdhMzYtMjBjYi00ZjQzLWJkMjctZGIyMjUwODQwMDYzIiwiZXhwIjoxNjUyMTE0NjI0fQ.bfqskll0tHLIlNbbErvq6Fs9ltbC24y5TzYxPBJ9r44" --block 2621440 -s -p 64 --no-progress v8.7z.002 2>&1 | tee cowtransfer.log
         echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
