@@ -1,3 +1,4 @@
+@@ -0,0 +1,90 @@
 #===================================================
 # Description: Build v8 enginer using GitHub Actions
 # Author: t1an5t
@@ -9,12 +10,10 @@ name: BUILD v8
 on:
   push:
     branches: [ master ]
-  # watch:
-  #   types: started
 
 env:
-  PATCH_FLAG: false
-  COMMIT: 11111
+  PATCH_FLAG: true
+  COMMIT: a7a350012c05f644f3f373fb48d7ac72f7f60542
   DEPOT_UPLOAD: false
   SRC_UPLOAD: true
   BINARY_UPLOAD: false
@@ -23,13 +22,12 @@ env:
 jobs:
   build:
     # The type of runner that the job will run on
-    runs-on: ubuntu-18.04
-    if: github.event.repository.owner.id == github.event.sender.id 	
-    
+    runs-on: ubuntu-18.04 	
+
     steps:
     - name: Checkout
       uses: actions/checkout@master
-      
+
     # init ubuntu1804 environment
     - name: init env
       run: |
