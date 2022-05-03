@@ -56,12 +56,24 @@ jobs:
         cd v8
         git reset --hard $COMMIT
         cd ..
-        
+    
+    - name: get ninja
+      run: |
+        sudo apt-get install libtool autoconf
+        git clone https://github.com/skvadrik/re2c.git re2c
+        cd re2c
+        mkdir -p m4
+        ./autogen.sh && ./configure --profix=/usr && make
+        cd ..
+        git clone https://github.com/ninja-build/ninja.git
+        cd ninja && ./configure.py --bootstrap && cd ..
+    
     - name: build v8
       run: |
         source ~/.bash_profile
         gclient sync -f
-    
+        tools/dev/v8gen.py x64.debug
+        ninja -C out.gn/x64.debug
     # compress this file
     - name: zip depot_tools
       if: env.DEPOT_UPLOAD == 'true' && !cancelled()
