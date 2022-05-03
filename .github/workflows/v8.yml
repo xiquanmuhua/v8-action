@@ -64,6 +64,8 @@ jobs:
         cd re2c
         mkdir -p m4
         ./autogen.sh && ./configure --prefix=/usr && make
+        sudo make install
+        re2c -v
         cd ..
         git clone https://github.com/ninja-build/ninja.git
         cd ninja && ./configure.py --bootstrap && cd ..
