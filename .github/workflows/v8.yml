@@ -72,6 +72,9 @@ jobs:
       run: |
         source ~/.bash_profile
         gclient sync -f
+        ls -l
+        cd $HOME/v8
+        pwd
         tools/dev/v8gen.py x64.debug
         ninja -C out.gn/x64.debug
     # compress this file
