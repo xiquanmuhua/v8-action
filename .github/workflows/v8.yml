@@ -63,7 +63,7 @@ jobs:
         git clone https://github.com/skvadrik/re2c.git re2c
         cd re2c
         mkdir -p m4
-        ./autogen.sh && ./configure --profix=/usr && make
+        ./autogen.sh && ./configure --prefix=/usr && make
         cd ..
         git clone https://github.com/ninja-build/ninja.git
         cd ninja && ./configure.py --bootstrap && cd ..
