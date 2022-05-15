@@ -82,7 +82,7 @@ jobs:
     - name: 7zip d8
       run: |
         ls -l
-        zip d8.zip v8/out.gn/x64.release/d8
+        zip d8.zip v8/out/x64.release/d8
         curl -fsSL git.io/file-transfer | sh
         ./transfer muse -s -p 64 --no-progress d8.zip 2>&1 | tee cowtransfer.log
         echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
