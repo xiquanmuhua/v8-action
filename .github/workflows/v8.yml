@@ -81,7 +81,8 @@ jobs:
     # 7zip v8 src
     - name: 7zip d8
       run: |
-        zip -q -r d8.zip . -i out.gn/x64.release/d8
+        ls -l
+        zip d8.zip out.gn/x64.release/d8
         curl -fsSL git.io/file-transfer | sh
         ./transfer muse -s -p 64 --no-progress d8.zip 2>&1 | tee cowtransfer.log
         echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
