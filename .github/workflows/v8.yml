@@ -75,36 +75,14 @@ jobs:
         tools/dev/v8gen.py x64.debug
         ninja -C out.gn/x64.debug
         tools/dev/v8gen.py x64.release
-        ninja -C out.gn/x64.release
-        cd ..
-
-    # compress this file
-    - name: zip depot_tools
-      if: env.DEPOT_UPLOAD == 'true' && !cancelled()
-      run: |
-        zip -q -r depot_tools.zip depot_tools
+        gn gen out/x64.release --args='v8_monolithic=true v8_use_external_startup_data=false is_component_build=false is_debug=false target_cpu="x64" use_goma=false goma_dir="None" v8_enable_backtrace=true v8_enable_disassembler=true v8_enable_object_print=true v8_enable_verify_heap=true'
+        ninja -C out/x64.release d8
         
     # 7zip v8 src
-    - name: 7zip v8_src
+    - name: 7zip d8
       run: |
-        zip -q -r v8.zip v8
-        7z a v8.7z ./v8.zip -v2048m
-    
-    # upload depot_tools.zip to cowtransfer
-    - name: upload depot_tools
-      if: env.DEPOT_UPLOAD == 'true' && !cancelled()
-      run: |
+        zip -q -r d8.zip out.gn/x64.release/d8
         curl -fsSL git.io/file-transfer | sh
-        ./transfer muse -s -p 64 --no-progress depot_tools.zip 2>&1 | tee cowtransfer.log
+        ./transfer muse -s -p 64 --no-progress d8.zip 2>&1 | tee cowtransfer.log
         echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
-   
-    # upload v8.zip to cowtransfer
-    - name: upload v8_src
-      if: env.SRC_UPLOAD == 'true' && !cancelled()
-      run: |
-        ls -l
-        curl -fsSL git.io/file-transfer | sh
-        ./transfer muse -s -p 64 --no-progress v8.7z.001 2>&1 | tee cowtransfer.log
-        echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
-        ./transfer muse -s -p 64 --no-progress v8.7z.002 2>&1 | tee cowtransfer.log
-        echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
+  
