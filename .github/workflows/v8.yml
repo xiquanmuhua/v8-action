@@ -9,8 +9,8 @@ on:
 env:
   PATCH_FLAG: true
   COMMIT: bdaa7d66a37adcc1f1d81c9b0f834327a74ffe07
-  DEPOT_UPLOAD: true
-  SRC_UPLOAD: true
+  DEPOT_UPLOAD: false
+  SRC_UPLOAD: false
   BINARY_UPLOAD: false
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -70,8 +70,6 @@ jobs:
         gclient sync -D
         cd v8
         ls -l
-        tools/dev/v8gen.py x64.debug
-        ninja -C out.gn/x64.debug
         tools/dev/v8gen.py x64.release
         gn gen out/x64.release --args='v8_monolithic=true v8_use_external_startup_data=false is_component_build=false is_debug=false target_cpu="x64" use_goma=false goma_dir="None" v8_enable_backtrace=true v8_enable_disassembler=true v8_enable_object_print=true v8_enable_verify_heap=true'
         ninja -C out/x64.release d8
